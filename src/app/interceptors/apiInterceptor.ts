@@ -6,7 +6,6 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
     url: `${environments.apiUrl}${req.url}`,
     setHeaders: {
       'Content-Type': 'application/json',
-      Accept: 'application/json',
     },
   });
 

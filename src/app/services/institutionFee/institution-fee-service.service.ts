@@ -11,6 +11,6 @@ export class InstitutionFeeServiceService {
 private httpClient = inject(HttpClient);
 
   getInstitutionFeeCategories():Observable<InstitutionFeeDto[]>{
-    return this.httpClient.get<InstitutionFeeDto[]>("/institution-fee")
+    return this.httpClient.get<InstitutionFeeDto[]>("/public/institution-fees")
   }
 }

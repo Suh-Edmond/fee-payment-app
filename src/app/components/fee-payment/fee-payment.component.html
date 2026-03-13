@@ -1,1 +1,77 @@
-<p>fee-payment works!</p>
+<div class="card my-5">
+  <div class="card-header">
+    <div class="p-2 text-center">
+      <h4>Student Fee Payment</h4>
+    </div>
+  </div>
+  <div class="card-body">
+    <h6 class="card-caption p-3">
+      Fill the information below to make student one-time fee payment
+    </h6>
+    <form (ngSubmit)="onSubmit()" [formGroup]="paymentForm">
+      <div class="form-group p-3">
+        <label for="name">Student Number</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter your student number"
+          required
+          formControlName="studentNumber"
+        />
+        <div
+          *ngIf="
+            paymentForm.get('studentNumber')?.invalid &&
+            paymentForm.get('studentNumber')?.touched
+          "
+        >
+          <small
+            class="text-danger"
+            *ngIf="paymentForm.get('studentNumber')?.errors?.['required']"
+          >
+            Student Number is required.
+          </small>
+        </div>
+      </div>
+      <div class="form-group p-3">
+        <label for="name">Payment Amount</label>
+        <input
+          type="number"
+          class="form-control"
+          required
+          formControlName="paymentAmount"
+        />
+        <div
+          *ngIf="
+            paymentForm.get('paymentAmount')?.invalid &&
+            paymentForm.get('paymentAmount')?.touched
+          "
+        >
+          <small
+            class="text-danger"
+            *ngIf="paymentForm.get('paymentAmount')?.errors?.['required']"
+          >
+            Payment amount is required
+          </small>
+        </div>
+      </div>
+      <div class="p-2 row mx-2 mb-5 mt-3">
+        <button
+          type="submit"
+          [disabled]="paymentForm.invalid"
+          class="btn btn-primary"
+        >
+          <span
+            *ngIf="isLoading"
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          >
+          </span>
+
+          <span *ngIf="!isLoading">Make Payment</span>
+          <span *ngIf="isLoading"> Processing Payment...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

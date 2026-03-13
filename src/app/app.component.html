@@ -1,6 +1,19 @@
 <main class="main">
   <app-navbar></app-navbar>
-  <div>
-    <router-outlet />
+
+  <div class="container">
+    <div class="row">
+      <div class="col-2 col-sm-12 col-xs-12 col-md-2 col-lg-2"></div>
+      <div class="col-8 col-xs-12 col-sm-12 col-md-8 col-lg-8">
+        <div class="alert alert-success p-2 mt-3" role="alert">
+          A simple success alert with Give it a click if you like.
+        </div>
+        <div class="alert alert-danger p-2 mt-3" role="alert">
+          A simple success alert with Give it a click if you like.
+        </div>
+        <router-outlet />
+      </div>
+      <div class="col-2 col-sm-12 col-xs-12 col-md-2 col-lg-2"></div>
+    </div>
   </div>
 </main>
