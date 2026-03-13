@@ -1,0 +1,10 @@
+<div
+  *ngIf="message"
+  [ngClass]="'alert alert-' + type"
+  class="alert-dismissible fade show"
+  role="alert"
+>
+  <strong>{{ type === "success" ? "Success!" : "Error!" }}</strong>
+  {{ message }}
+  <button type="button" class="btn-close"></button>
+</div>

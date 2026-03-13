@@ -1,14 +1,19 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { FeePaymentServiceService } from '../../services/feePayment/fee-payment-service.service';
 import { FeePaymentRequest } from '../../models/feepayment/fee-payment-request';
 import { FeePaymentResponse } from '../../models/feepayment/fee-payment-response';
 import { CommonModule } from '@angular/common';
-import { CommonService } from '../../services/common-service.service';
+import { NotificationComponent } from '../notification/notification/notification.component';
 
 @Component({
   selector: 'app-fee-payment',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, NotificationComponent],
   templateUrl: './fee-payment.component.html',
   styleUrl: './fee-payment.component.scss',
 })
@@ -17,9 +22,10 @@ export class FeePaymentComponent implements OnInit {
   paymentForm!: FormGroup;
   feePaymentResponse: FeePaymentResponse[] = [];
   isLoading: boolean = false;
-  constructor(private feePaymentServiceService: FeePaymentServiceService, private commonService:CommonService) {}
+  feedbackMsg: string = '';
+  feedbackType:  "success" | "danger" | "info" | "warning" = 'success';
+  constructor(private feePaymentServiceService: FeePaymentServiceService) {}
   ngOnInit(): void {
-    this.commonService.setRequestFeedbackMsg("")
     this.buildFormFields();
   }
   buildFormFields() {
@@ -42,9 +48,14 @@ export class FeePaymentComponent implements OnInit {
         .makeStudentPayment(payload)
         .subscribe({
           next: (response) => {
+            this.feedbackType = 'success';
+            this.feedbackMsg = 'Payment completed successfully';
             this.feePaymentResponse.push(response);
           },
-          error: (err) => {},
+          error: (err) => {
+            this.feedbackType = 'danger';
+            this.feedbackMsg = 'Payment failed';
+          },
           complete: () => {
             this.isLoading = false;
           },

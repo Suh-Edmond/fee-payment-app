@@ -14,10 +14,11 @@ import { InstitutionFeeServiceService } from '../../../services/institutionFee/i
 import { StudentAccountRequest } from '../../../models/account/student-account-request';
 
 import { CommonModule } from '@angular/common';
+import { NotificationComponent } from '../../notification/notification/notification.component';
 
 @Component({
   selector: 'app-student-account',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, NotificationComponent],
   templateUrl: './student-account.component.html',
   styleUrl: './student-account.component.scss',
 })
@@ -51,7 +52,8 @@ export class StudentAccountComponent implements OnInit, OnDestroy {
     },
   ];
   isLoading: boolean = false;
-
+  feedbackMsg: string = '';
+  feedbackType: "success" | "danger" | "info" | "warning" = 'success';
   constructor(
     private institutionFeeService: InstitutionFeeServiceService,
     private studAccService: StudentAccountServiceService,
@@ -98,8 +100,14 @@ export class StudentAccountComponent implements OnInit, OnDestroy {
       this.studAccService
         .createStudentAccount(payload)
         .subscribe({
-          next: (response) => {},
-          error: (err) => {},
+          next: (response) => {
+            this.feedbackType = 'success';
+            this.feedbackMsg = 'Account created successfully';
+          },
+          error: (err) => {
+            this.feedbackType = 'danger';
+            this.feedbackMsg = 'Account creation failed';
+          },
           complete: () => {
             this.isLoading = false;
           },
