@@ -7,4 +7,6 @@ export class FeePaymentResponse {
   incentiveRate: undefined | undefined;
   incentiveAmount: number | undefined;
   studentNumber: string | undefined;
+  created: string = '';
+  updated: string = '';
 }

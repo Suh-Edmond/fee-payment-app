@@ -1,1 +1,116 @@
-<p>student-account works!</p>
+<app-notification
+  [message]="feedbackMsg"
+  [type]="feedbackType"
+></app-notification>
+<div class="card my-5">
+  <div class="card-header">
+    <div class="p-2 text-center">
+      <h4>Create Student Account</h4>
+    </div>
+  </div>
+  <div class="card-body">
+    <h6 class="card-caption p-3">
+      Fill the information below to create a student account
+    </h6>
+    <form (ngSubmit)="onSubmit()" [formGroup]="studentForm">
+      <div class="form-group p-3">
+        <label for="name">Student Name</label>
+        <input
+          id="studentName"
+          type="text"
+          class="form-control"
+          placeholder="Enter your name"
+          required
+          formControlName="studentName"
+        />
+
+        <div
+          *ngIf="
+            studentForm.get('studentName')?.invalid &&
+            studentForm.get('studentName')?.touched
+          "
+        >
+          <small
+            class="text-danger"
+            *ngIf="studentForm.get('studentName')?.errors?.['required']"
+          >
+            Student Name is required.
+          </small>
+          <small
+            class="text-danger"
+           *ngIf="studentForm.get('studentName')?.hasError('minlength')"
+          >
+            Student Name must have at least three characters
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group p-3">
+        <label for="name">Student Number</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter your student number"
+          required
+          formControlName="studentNumber"
+        />
+        <div
+          *ngIf="
+            studentForm.get('studentNumber')?.invalid &&
+            studentForm.get('studentNumber')?.touched
+          "
+        >
+          <small
+            class="text-danger"
+            *ngIf="studentForm.get('studentNumber')?.errors?.['required']"
+          >
+            Student Number is required.
+          </small>
+          <small
+            class="text-danger"
+           *ngIf="studentForm.get('studentNumber')?.hasError('minlength')"
+          >
+            Student Number must have at least five characters
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="studentForm.get('studentNumber')?.hasError('maxlength')"
+          >
+            Student Number must not be more than ten characters
+          </small>
+        </div>
+      </div>
+      <div class="form-group p-3">
+        <label for="name">Institution Fee Category</label>
+        <select formControlName="institutionFeeId" class="form-select">
+          <option [ngValue]="null" disabled>Select a category</option>
+
+          <option
+            *ngFor="let category of institutionFeeCategories"
+            [ngValue]="category.id"
+          >
+            {{ category.name }} - {{ category.amountPayable }}
+          </option>
+        </select>
+      </div>
+      <div class="p-2 row mx-2 mb-5 mt-3">
+        <button
+          type="submit"
+          [disabled]="studentForm.invalid"
+          class="btn btn-primary"
+        >
+          <span
+            *ngIf="isLoading"
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          >
+          </span>
+
+          <span *ngIf="!isLoading"> Create Account</span>
+          <span *ngIf="isLoading"> Creating account...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
