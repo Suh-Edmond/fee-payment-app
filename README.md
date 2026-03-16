@@ -17,6 +17,11 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
+## Test the Application
+* Visit the URL `http://localhost:4200/`
+* Create an student account
+* Make One-time-fee-payment
+
 ## Building
 
 To build the project run:
