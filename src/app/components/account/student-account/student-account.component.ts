@@ -61,7 +61,6 @@ export class StudentAccountComponent implements OnInit, OnDestroy {
     });
   }
   getInstitutionFeeCategories() {
-    this.isLoading = true;
     const sub = this.institutionFeeService
       .getInstitutionFeeCategories()
       .subscribe({
@@ -71,11 +70,8 @@ export class StudentAccountComponent implements OnInit, OnDestroy {
         error: (err) => {
           this.feedbackType = 'danger';
           this.feedbackMsg = 'An Error occurred could not fetch fee categories';
-          this.isLoading = false;
         },
-        complete: () => {
-          this.isLoading = false;
-        },
+        complete: () => {},
       });
     this.subscriptions.add(sub);
   }
