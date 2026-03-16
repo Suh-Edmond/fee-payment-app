@@ -31,6 +31,7 @@ export class StudentAccountComponent implements OnInit, OnDestroy {
   studentForm!: FormGroup;
   institutionFeeCategories: InstitutionFeeDto[] = [];
   isLoading: boolean = false;
+    isFetching: boolean = false;
   feedbackMsg: string = '';
   feedbackType: 'success' | 'danger' | 'info' | 'warning' = 'success';
   private subscriptions = new Subscription();
@@ -42,7 +43,6 @@ export class StudentAccountComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getInstitutionFeeCategories();
-
     this.buildFormFields();
   }
 
@@ -61,6 +61,7 @@ export class StudentAccountComponent implements OnInit, OnDestroy {
     });
   }
   getInstitutionFeeCategories() {
+    this.isFetching = true;
     const sub = this.institutionFeeService
       .getInstitutionFeeCategories()
       .subscribe({
@@ -71,7 +72,9 @@ export class StudentAccountComponent implements OnInit, OnDestroy {
           this.feedbackType = 'danger';
           this.feedbackMsg = 'An Error occurred could not fetch fee categories';
         },
-        complete: () => {},
+        complete: () => {
+          this.isFetching = false
+        },
       });
     this.subscriptions.add(sub);
   }
@@ -83,7 +86,6 @@ export class StudentAccountComponent implements OnInit, OnDestroy {
       const sub = this.studAccService.createStudentAccount(payload).subscribe({
         next: (response) => {
           localStorage.setItem('data', JSON.stringify(response));
-          this.router.navigate([AppRoutes.FEE_PAYMENT_ROUTE]);
           this.feedbackType = 'success';
           this.feedbackMsg = 'Account created successfully';
         },
@@ -94,6 +96,7 @@ export class StudentAccountComponent implements OnInit, OnDestroy {
         },
         complete: () => {
           this.isLoading = false;
+          this.router.navigate([AppRoutes.FEE_PAYMENT_ROUTE]);
         },
       });
       this.subscriptions.add(sub);

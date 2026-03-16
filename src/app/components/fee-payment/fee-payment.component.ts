@@ -34,6 +34,7 @@ export class FeePaymentComponent implements OnInit, OnDestroy {
   feedbackType: 'success' | 'danger' | 'info' | 'warning' = 'success';
   studentData!: StudentAccountResponse;
   previousPayment!: FeePaymentResponse;
+  isFetching:boolean = false;
 
   private subscriptions = new Subscription();
 
@@ -43,7 +44,6 @@ export class FeePaymentComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     const data = localStorage.getItem('data');
-
     if (data !== null && data !== undefined) {
       this.studentData = JSON.parse(data);
     }
@@ -59,7 +59,7 @@ export class FeePaymentComponent implements OnInit, OnDestroy {
     });
   }
   getStudentFeePayments(studentNumber: string | undefined) {
-    this.isLoading = true;
+    this.isFetching = true;
     const sub = this.feePaymentServiceService
       .getStudentPayments(studentNumber)
       .subscribe({
@@ -75,12 +75,12 @@ export class FeePaymentComponent implements OnInit, OnDestroy {
             );
         },
         error: (e) => {
-          this.isLoading = false;
+          this.isFetching = false;
           this.feedbackType = 'danger';
           this.feedbackMsg = 'Could not fetch student payments';
         },
         complete: () => {
-          this.isLoading = false;
+          this.isFetching = false;
         },
       });
     this.subscriptions.add(sub);

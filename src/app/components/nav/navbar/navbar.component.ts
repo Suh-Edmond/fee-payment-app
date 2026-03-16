@@ -1,21 +1,12 @@
-import { NgClass } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { AppRoutes } from '../../../constants/app-routes';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink, NgClass],
+  imports: [],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent{
 
-  currentRoute:string = AppRoutes.ACCOUNT_ROUTE
-  constructor(private router:Router){
 
-  }
-  ngOnInit(): void {
-    this.currentRoute = this.router.url
-  }
 }

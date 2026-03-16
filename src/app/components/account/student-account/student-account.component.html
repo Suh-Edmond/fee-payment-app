@@ -38,7 +38,7 @@
           </small>
           <small
             class="text-danger"
-            *ngIf="studentForm.get('studentName')?.errors?.['minLength']"
+           *ngIf="studentForm.get('studentName')?.hasError('minlength')"
           >
             Student Name must have at least three characters
           </small>
@@ -68,13 +68,13 @@
           </small>
           <small
             class="text-danger"
-            *ngIf="studentForm.get('studentNumber')?.errors?.['minLength']"
+           *ngIf="studentForm.get('studentNumber')?.hasError('minlength')"
           >
             Student Number must have at least five characters
           </small>
           <small
             class="text-danger"
-            *ngIf="studentForm.get('studentNumber')?.errors?.['maxLength']"
+            *ngIf="studentForm.get('studentNumber')?.hasError('maxlength')"
           >
             Student Number must not be more than ten characters
           </small>
