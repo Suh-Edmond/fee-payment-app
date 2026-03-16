@@ -4,6 +4,6 @@ import { StudentAccountComponent } from './components/account/student-account/st
 
 export const routes: Routes = [
    { path: '', redirectTo: '/make-fee-payment', pathMatch: 'full' },
-   { path: 'make-fee-payment', component: FeePaymentComponent, title: 'Institutional Fee Payment' },
+   { path: 'make-fee-payment', component: FeePaymentComponent, title: 'Institutional Fee Payment' , data:{name:"fee_payment"}},
    { path: 'create-student-account', component: StudentAccountComponent, title: 'Student Account' },
 ];
