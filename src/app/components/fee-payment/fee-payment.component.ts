@@ -44,17 +44,17 @@ export class FeePaymentComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const data = localStorage.getItem('data');
 
-    if (data !== null) {
+    if (data !== null && data !== undefined) {
       this.studentData = JSON.parse(data);
     }
-    this.getStudentFeePayments(this.studentData.studentNumber);
+    this.getStudentFeePayments(this.studentData?.studentNumber);
     this.buildFormFields();
   }
   buildFormFields() {
     this.paymentForm = this.fb.group({
       paymentAmount: [0, [Validators.required, Validators.min(1)]],
-      studentNumber: this.studentData.studentNumber,
-      studentName: this.studentData.studentName,
+      studentNumber: this.studentData?.studentNumber,
+      studentName: this.studentData?.studentName,
       amountPayable: 0,
     });
   }
@@ -71,7 +71,7 @@ export class FeePaymentComponent implements OnInit, OnDestroy {
             ?.patchValue(
               this.previousPayment !== undefined
                 ? this.previousPayment.newBalance
-                : this.studentData.institutionFeeDto?.amountPayable,
+                : this.studentData?.institutionFeeDto?.amountPayable,
             );
         },
         error: (e) => {
@@ -92,8 +92,11 @@ export class FeePaymentComponent implements OnInit, OnDestroy {
     )[0];
   }
 
-  validPaymentAmount(){
-    return this.paymentForm.get('paymentAmount')?.value <= this.paymentForm.get("amountPayable")?.value
+  validPaymentAmount() {
+    return (
+      this.paymentForm.get('paymentAmount')?.value <=
+      this.paymentForm.get('amountPayable')?.value
+    );
   }
 
   onSubmit() {
@@ -115,7 +118,7 @@ export class FeePaymentComponent implements OnInit, OnDestroy {
           },
           complete: () => {
             this.isLoading = false;
-            this.paymentForm.get('paymentAmount')?.patchValue(0)
+            this.paymentForm.get('paymentAmount')?.patchValue(0);
           },
         });
       this.subscriptions.add(sub);
