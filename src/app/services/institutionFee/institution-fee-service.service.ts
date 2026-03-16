@@ -4,13 +4,12 @@ import { Observable } from 'rxjs';
 import { InstitutionFeeDto } from '../../models/instifutionfee/institution-fee-dto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class InstitutionFeeServiceService {
+  private httpClient = inject(HttpClient);
 
-private httpClient = inject(HttpClient);
-
-  getInstitutionFeeCategories():Observable<InstitutionFeeDto[]>{
-    return this.httpClient.get<InstitutionFeeDto[]>("/public/institution-fees")
+  getInstitutionFeeCategories(): Observable<InstitutionFeeDto[]> {
+    return this.httpClient.get<InstitutionFeeDto[]>('/public/institution-fees');
   }
 }

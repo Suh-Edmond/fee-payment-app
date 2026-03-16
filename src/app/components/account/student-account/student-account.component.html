@@ -1,4 +1,7 @@
-<app-notification [message]="feedbackMsg" [type]="feedbackType"></app-notification>
+<app-notification
+  [message]="feedbackMsg"
+  [type]="feedbackType"
+></app-notification>
 <div class="card my-5">
   <div class="card-header">
     <div class="p-2 text-center">
@@ -13,6 +16,7 @@
       <div class="form-group p-3">
         <label for="name">Student Name</label>
         <input
+          id="studentName"
           type="text"
           class="form-control"
           placeholder="Enter your name"
@@ -31,6 +35,12 @@
             *ngIf="studentForm.get('studentName')?.errors?.['required']"
           >
             Student Name is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="studentForm.get('studentName')?.errors?.['minLength']"
+          >
+            Student Name must have at least three characters
           </small>
         </div>
       </div>
@@ -55,6 +65,18 @@
             *ngIf="studentForm.get('studentNumber')?.errors?.['required']"
           >
             Student Number is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="studentForm.get('studentNumber')?.errors?.['minLength']"
+          >
+            Student Number must have at least five characters
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="studentForm.get('studentNumber')?.errors?.['maxLength']"
+          >
+            Student Number must not be more than ten characters
           </small>
         </div>
       </div>
