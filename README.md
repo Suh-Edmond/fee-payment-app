@@ -24,11 +24,3 @@ To build the project run:
 ```bash
 ng build
 ```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```

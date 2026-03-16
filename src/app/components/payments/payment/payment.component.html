@@ -4,8 +4,8 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">StudentNumber</th>
-        <th scope="col">Previous Bal </th>
+        <th scope="col">Stud Num</th>
+        <th scope="col">Pre Bal </th>
         <th scope="col">Amount Paid</th>
         <th scope="col">incentive Rate</th>
         <th scope="col">incentive Amount</th>
@@ -17,11 +17,11 @@
       <tr *ngFor="let payment of feePayments">
         <th scope="row">{{feePayments.indexOf(payment) + 1}}</th>
         <td>{{payment.studentNumber}}</td>
-         <td>{{payment.previousBalance}}</td>
-        <td>{{payment.paymentAmount}}</td>
+         <td>{{payment.previousBalance | number:'1.2-2'}}</td>
+        <td>{{payment.paymentAmount | number:'1.2-2'}}</td>
         <td>{{payment.incentiveRate}} %</td>
-        <td>{{payment.incentiveAmount}}</td>
-        <td>{{payment.newBalance}}</td>
+        <td>{{payment.incentiveAmount | number:'1.2-2'}}</td>
+        <td>{{payment.newBalance | number:'1.2-2'}}</td>
          <td>{{payment.nextDueDate}}</td>
       </tr>
     </tbody>
