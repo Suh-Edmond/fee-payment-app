@@ -91,7 +91,7 @@ export class StudentAccountComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           this.feedbackType = 'danger';
-          this.feedbackMsg = 'Account creation failed';
+          this.feedbackMsg = err.error.detail;
           this.isLoading = false;
         },
         complete: () => {
