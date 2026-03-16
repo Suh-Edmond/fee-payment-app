@@ -12,6 +12,10 @@ export class FeePaymentServiceService {
   private httpClient = inject(HttpClient);
 
   makeStudentPayment(request: FeePaymentRequest):Observable<FeePaymentResponse>{
-    return this.httpClient.post<FeePaymentResponse>("/one-time-fee-payment", request)
+    return this.httpClient.post<FeePaymentResponse>("/public/one-time-fee-payment", request)
+  }
+
+  getStudentPayments(studentNumber:string | undefined):Observable<FeePaymentResponse[]>{
+    return this.httpClient.get<FeePaymentResponse[]>("/public/student-payments?studentNumber="+studentNumber)
   }
 }
