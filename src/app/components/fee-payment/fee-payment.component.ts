@@ -34,7 +34,7 @@ export class FeePaymentComponent implements OnInit, OnDestroy {
   feedbackType: 'success' | 'danger' | 'info' | 'warning' = 'success';
   studentData!: StudentAccountResponse;
   previousPayment!: FeePaymentResponse;
-  isFetching:boolean = false;
+  isFetching: boolean = false;
 
   private subscriptions = new Subscription();
 
@@ -53,9 +53,11 @@ export class FeePaymentComponent implements OnInit, OnDestroy {
   buildFormFields() {
     this.paymentForm = this.fb.group({
       paymentAmount: [0, [Validators.required, Validators.min(1)]],
-      studentNumber: this.studentData?.studentNumber,
-      studentName: this.studentData?.studentName,
-      amountPayable: 0,
+      studentNumber: [
+        { value: this.studentData?.studentNumber, disabled: true },
+      ],
+      studentName: [{ value: this.studentData?.studentName, disabled: true }],
+      amountPayable: [{ value: 0, disabled: true }],
     });
   }
   getStudentFeePayments(studentNumber: string | undefined) {
@@ -101,7 +103,7 @@ export class FeePaymentComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.isLoading = true;
-    const payload: FeePaymentRequest = { ...this.paymentForm.value };
+    const payload: FeePaymentRequest = {...this.paymentForm.getRawValue()};
     if (this.paymentForm.valid && this.validPaymentAmount()) {
       const sub = this.feePaymentServiceService
         .makeStudentPayment(payload)

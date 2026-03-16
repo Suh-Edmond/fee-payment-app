@@ -5,17 +5,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {
-  InstitutionFeeCategory,
-  InstitutionFeeDto,
-} from '../../../models/instifutionfee/institution-fee-dto';
+import { InstitutionFeeDto } from '../../../models/instifutionfee/institution-fee-dto';
 import { StudentAccountServiceService } from '../../../services/account/student-account-service.service';
 import { InstitutionFeeServiceService } from '../../../services/institutionFee/institution-fee-service.service';
 import { StudentAccountRequest } from '../../../models/account/student-account-request';
 
 import { CommonModule } from '@angular/common';
 import { NotificationComponent } from '../../notification/notification/notification.component';
-import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { AppRoutes } from '../../../constants/app-routes';
@@ -31,7 +27,7 @@ export class StudentAccountComponent implements OnInit, OnDestroy {
   studentForm!: FormGroup;
   institutionFeeCategories: InstitutionFeeDto[] = [];
   isLoading: boolean = false;
-    isFetching: boolean = false;
+  isFetching: boolean = false;
   feedbackMsg: string = '';
   feedbackType: 'success' | 'danger' | 'info' | 'warning' = 'success';
   private subscriptions = new Subscription();
@@ -48,7 +44,7 @@ export class StudentAccountComponent implements OnInit, OnDestroy {
 
   buildFormFields() {
     this.studentForm = this.fb.group({
-      studentName: ['', [Validators.required, Validators.minLength(3)]],
+      studentName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(255)]],
       studentNumber: [
         '',
         [
@@ -73,7 +69,7 @@ export class StudentAccountComponent implements OnInit, OnDestroy {
           this.feedbackMsg = 'An Error occurred could not fetch fee categories';
         },
         complete: () => {
-          this.isFetching = false
+          this.isFetching = false;
         },
       });
     this.subscriptions.add(sub);
@@ -91,8 +87,12 @@ export class StudentAccountComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           this.feedbackType = 'danger';
-          this.feedbackMsg = err.error.detail;
+          this.feedbackMsg = 'An error occurred! Could not create account';
           this.isLoading = false;
+          if (err.status === 409) {
+            this.feedbackType = 'danger';
+            this.feedbackMsg = 'The studentNumber has already been taken';
+          }
         },
         complete: () => {
           this.isLoading = false;
